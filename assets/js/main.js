@@ -24,12 +24,26 @@
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 
-  // Mobile nav
-  const tog = document.querySelector('.nav-toggle');
-  const lnks = document.querySelector('.nav-links');
-  if(tog && lnks){
-    tog.addEventListener('click', ()=> lnks.classList.toggle('open'));
-    lnks.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> lnks.classList.remove('open')));
+  // Mobile drawer (premium side drawer)
+  const drawerToggle = document.querySelector('.nav-toggle');
+  const drawer = document.querySelector('.nav-drawer');
+  const drawerOverlay = document.querySelector('.nav-overlay');
+  const drawerClose = document.querySelector('.drawer-close');
+  if(drawerToggle && drawer){
+    function openDrawer(){
+      drawer.classList.add('open');
+      if(drawerOverlay) drawerOverlay.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer(){
+      drawer.classList.remove('open');
+      if(drawerOverlay) drawerOverlay.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+    drawerToggle.addEventListener('click', openDrawer);
+    if(drawerClose) drawerClose.addEventListener('click', closeDrawer);
+    if(drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+    drawer.querySelectorAll('.drawer-item').forEach(a => a.addEventListener('click', closeDrawer));
   }
 
   // Reveal on scroll
@@ -113,7 +127,7 @@
 
   // Set active nav link
   const path = location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-links a').forEach(a=>{
+  document.querySelectorAll('.nav-links a, .drawer-item').forEach(a=>{
     if(a.getAttribute('href') === path) a.classList.add('active');
   });
 
