@@ -108,7 +108,7 @@
   }
 
   // Set active nav link
-  const path = location.pathname.split('/').pop() || 'index.html';
+  const path = location.pathname === '/' ? '/' : location.pathname;
   document.querySelectorAll('.nav-links a, .drawer-item').forEach(a=>{
     if(a.getAttribute('href') === path) a.classList.add('active');
   });
