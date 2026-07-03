@@ -74,24 +74,6 @@
   },{threshold:.4});
   counters.forEach(c=> cio.observe(c));
 
-  // Magnetic buttons (rAF-throttled to prevent layout thrashing)
-  document.querySelectorAll('.magnet').forEach(el=>{
-    let magnetTicking = false;
-    el.addEventListener('mousemove', (e)=>{
-      if(!magnetTicking){
-        requestAnimationFrame(()=>{
-          const r = el.getBoundingClientRect();
-          const x = e.clientX - r.left - r.width/2;
-          const y = e.clientY - r.top - r.height/2;
-          el.style.transform = `translate(${x*0.15}px, ${y*0.25}px)`;
-          magnetTicking = false;
-        });
-        magnetTicking = true;
-      }
-    });
-    el.addEventListener('mouseleave', ()=> el.style.transform = '');
-  });
-
   // Gallery filter + lightbox
   const tabs = document.querySelectorAll('.gallery-tabs button');
   const items = document.querySelectorAll('.masonry .m-item');
