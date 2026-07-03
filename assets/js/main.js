@@ -121,7 +121,7 @@
       e.preventDefault();
       const d = new FormData(form);
       const msg = `*New Appointment Request*%0A%0AName: ${d.get('name')}%0APhone: ${d.get('phone')}%0AEmail: ${d.get('email')||'-'}%0AService: ${d.get('service')}%0ADate: ${d.get('date')}%0ATime: ${d.get('time')}%0A%0AMessage: ${d.get('message')||'-'}`;
-      window.open(`https://wa.me/919999999999?text=${msg}`, '_blank');
+      window.open(`https://wa.me/919443782308?text=${msg}`, '_blank');
     });
   }
 
