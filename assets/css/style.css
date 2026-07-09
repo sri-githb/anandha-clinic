@@ -538,6 +538,115 @@ section{padding:clamp(64px,9vw,128px) 0;content-visibility:auto;contain-intrinsi
   .nav-links{display:none!important}
 }
 
+/* ========== Social Dock (Desktop) ========== */
+.social-dock{position:fixed;right:24px;top:50%;z-index:800;transform:translateY(-50%)}
+
+.dock-panel{
+  display:flex;flex-direction:column;gap:10px;
+  background:rgba(255,255,255,.55);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.65);border-radius:22px;
+  padding:14px 10px;box-shadow:0 8px 32px rgba(15,76,129,.10),0 1.5px 6px rgba(15,76,129,.06);
+}
+
+.dock-item{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  width:48px;height:48px;border-radius:15px;color:var(--secondary);
+  transition:transform .28s cubic-bezier(.22,.61,.36,1),background .28s ease,box-shadow .28s ease,color .28s ease;
+  -webkit-tap-highlight-color:transparent;outline:none;
+}
+.dock-item:hover,.dock-item:focus-visible{
+  transform:scale(1.08);
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:#fff;box-shadow:0 0 20px rgba(43,189,181,.25),0 4px 16px rgba(15,76,129,.12);
+}
+.dock-item:active{transform:scale(.95)}
+.dock-item svg{position:relative;z-index:2;pointer-events:none}
+
+/* Tooltip */
+.dock-tooltip{
+  position:absolute;right:calc(100% + 14px);top:50%;transform:translateY(-50%);
+  padding:7px 14px;border-radius:10px;white-space:nowrap;
+  background:var(--secondary);color:#fff;font-size:.76rem;font-weight:600;
+  letter-spacing:.01em;pointer-events:none;
+  opacity:0;visibility:hidden;
+  transition:opacity .25s ease,visibility .25s ease,transform .25s ease;
+  box-shadow:0 4px 14px rgba(15,76,129,.18);
+}
+.dock-tooltip::after{
+  content:'';position:absolute;top:50%;left:100%;
+  transform:translateY(-50%);
+  border:6px solid transparent;border-left:6px solid var(--secondary);
+}
+.dock-item:hover .dock-tooltip,.dock-item:focus-visible .dock-tooltip{
+  opacity:1;visibility:visible;transform:translateY(-50%) translateX(-4px);
+}
+
+/* Ripple */
+.dock-item .ripple{
+  position:absolute;border-radius:50%;
+  background:rgba(255,255,255,.45);
+  transform:scale(0);animation:rippleEffect .5s ease-out forwards;
+  pointer-events:none;z-index:1;
+}
+@keyframes rippleEffect{to{transform:scale(3.5);opacity:0}}
+
+/* Dock toggle button (hidden on desktop) */
+.dock-toggle{
+  display:none;width:50px;height:50px;border-radius:16px;
+  background:rgba(255,255,255,.55);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.65);
+  color:var(--secondary);cursor:pointer;
+  align-items:center;justify-content:center;
+  box-shadow:0 8px 32px rgba(15,76,129,.10),0 1.5px 6px rgba(15,76,129,.06);
+  transition:transform .28s cubic-bezier(.22,.61,.36,1),box-shadow .28s ease;
+  -webkit-tap-highlight-color:transparent;outline:none;
+}
+.dock-toggle:hover,.dock-toggle:focus-visible{transform:scale(1.08);box-shadow:0 12px 40px rgba(15,76,129,.14)}
+.dock-toggle:active{transform:scale(.95)}
+
+/* ========== Footer Social ========== */
+.footer-social{display:flex;gap:10px;margin-top:18px}
+.footer-social-link{
+  display:flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:12px;
+  color:rgba(255,255,255,.65);
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.1);
+  transition:all .28s cubic-bezier(.22,.61,.36,1);
+  -webkit-tap-highlight-color:transparent;
+}
+.footer-social-link:hover{
+  transform:scale(1.1) translateY(-2px);
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:#fff;border-color:transparent;
+  box-shadow:0 6px 20px rgba(43,189,181,.3);
+}
+.footer-social-link:active{transform:scale(.95)}
+.footer-social-link svg{width:18px;height:18px}
+
+/* ========== Social Dock Mobile ========== */
+@media(max-width:980px){
+  .social-dock{right:16px;top:auto;bottom:90px;transform:none}
+  .dock-panel{
+    display:flex;flex-direction:column;gap:10px;
+    position:absolute;bottom:calc(100% + 14px);right:0;
+    transform:translateY(10px);
+    opacity:0;visibility:hidden;pointer-events:none;
+    transition:transform .3s cubic-bezier(.22,.61,.36,1),opacity .3s ease,visibility .3s ease;
+  }
+  .social-dock.expanded .dock-panel{
+    transform:translateY(0);opacity:1;visibility:visible;pointer-events:auto;
+  }
+  .dock-toggle{display:flex}
+  .dock-tooltip{display:none}
+}
+@media(max-width:480px){
+  .dock-item{width:44px;height:44px;border-radius:13px}
+  .dock-panel{padding:12px 8px;gap:8px}
+}
+
 /* utilities */
 .text-center{text-align:center}
 .mt-0{margin-top:0}.mb-0{margin-bottom:0}

@@ -121,4 +121,35 @@
       if(t){ e.preventDefault(); window.scrollTo({top: t.offsetTop - 80, behavior:'smooth'}); }
     });
   });
+
+  // Social dock — mobile expand/collapse
+  const dock = document.querySelector('.social-dock');
+  const dockToggle = dock && dock.querySelector('.dock-toggle');
+  if(dock && dockToggle){
+    dockToggle.addEventListener('click', ()=>{
+      const expanded = dock.classList.toggle('expanded');
+      dockToggle.setAttribute('aria-expanded', expanded);
+    });
+    document.addEventListener('click', (e)=>{
+      if(dock.classList.contains('expanded') && !dock.contains(e.target)){
+        dock.classList.remove('expanded');
+        dockToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  // Social dock — ripple effect
+  document.querySelectorAll('.dock-item').forEach(item=>{
+    item.addEventListener('click', (e)=>{
+      const rect = item.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      const size = Math.max(rect.width, rect.height);
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+      ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+      item.appendChild(ripple);
+      ripple.addEventListener('animationend', ()=> ripple.remove());
+    });
+  });
 })();
