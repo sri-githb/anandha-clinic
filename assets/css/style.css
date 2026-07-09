@@ -437,14 +437,24 @@ section{padding:clamp(64px,9vw,128px) 0;content-visibility:auto;contain-intrinsi
 [data-reveal="right"]{transform:translateX(28px)}
 [data-reveal="right"].in{transform:translateX(0)}
 
-/* WhatsApp float */
+/* WhatsApp float — matches dock glassmorphism */
 .whatsapp-float{
-  position:fixed;right:22px;bottom:22px;z-index:900;
-  width:58px;height:58px;border-radius:50%;
-  background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;
-  font-weight:700;box-shadow:0 12px 30px rgba(37,211,102,.4);transition:.3s var(--ease);
+  position:fixed;right:24px;bottom:24px;z-index:800;
+  width:54px;height:54px;border-radius:18px;
+  background:rgba(255,255,255,.55);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.65);
+  color:#25D366;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 32px rgba(15,76,129,.10),0 1.5px 6px rgba(15,76,129,.06);
+  transition:transform .28s cubic-bezier(.22,.61,.36,1),background .28s ease,box-shadow .28s ease,color .28s ease;
 }
-.whatsapp-float:hover{transform:scale(1.08);color:#fff}
+.whatsapp-float:hover{
+  transform:scale(1.08);
+  background:linear-gradient(135deg,#25D366,#128C7E);
+  color:#fff;box-shadow:0 0 20px rgba(37,211,102,.25),0 4px 16px rgba(18,140,126,.12);
+}
+.whatsapp-float:active{transform:scale(.95)}
+.whatsapp-float svg{width:24px;height:24px}
 
 /* ========== Mobile Drawer (Premium side drawer) ========== */
 .nav-overlay{
@@ -562,6 +572,10 @@ section{padding:clamp(64px,9vw,128px) 0;content-visibility:auto;contain-intrinsi
 }
 .dock-item:active{transform:scale(.95)}
 .dock-item svg{position:relative;z-index:2;pointer-events:none}
+.dock-item[data-platform="whatsapp"]:hover,.dock-item[data-platform="whatsapp"]:focus-visible{
+  background:linear-gradient(135deg,#25D366,#128C7E);
+  box-shadow:0 0 20px rgba(37,211,102,.25),0 4px 16px rgba(18,140,126,.12);
+}
 
 /* Tooltip */
 .dock-tooltip{
@@ -581,6 +595,8 @@ section{padding:clamp(64px,9vw,128px) 0;content-visibility:auto;contain-intrinsi
 .dock-item:hover .dock-tooltip,.dock-item:focus-visible .dock-tooltip{
   opacity:1;visibility:visible;transform:translateY(-50%) translateX(-4px);
 }
+.dock-item[data-platform="whatsapp"] .dock-tooltip{background:#25D366}
+.dock-item[data-platform="whatsapp"] .dock-tooltip::after{border-left-color:#25D366}
 
 /* Ripple */
 .dock-item .ripple{
@@ -628,6 +644,7 @@ section{padding:clamp(64px,9vw,128px) 0;content-visibility:auto;contain-intrinsi
 
 /* ========== Social Dock Mobile ========== */
 @media(max-width:980px){
+  .whatsapp-float{display:none}
   .social-dock{right:16px;top:auto;bottom:90px;transform:none}
   .dock-panel{
     display:flex;flex-direction:column;gap:10px;
